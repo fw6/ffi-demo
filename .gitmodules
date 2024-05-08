@@ -1,0 +1,9 @@
+[submodule "cppjieba-cabi"]
+	path = deps/cppjieba-cabi
+	url = git@github.com:messense/cppjieba-cabi.git
+[submodule "snappy"]
+	path = deps/snappy
+	url = git@github.com:google/snappy.git
+[submodule "libexif"]
+	path = deps/libexif
+	url = git@github.com:libexif/libexif.git

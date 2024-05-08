@@ -1,0 +1,14 @@
+{
+    "cSpell.words": [
+        "jieba"
+    ],
+    // https://www.reddit.com/r/rust/comments/12s62fe/how_to_develop_a_crate_with_optional_features/
+    "rust-analyzer.cargo.features": [
+        // "jieba",
+        // "snappy",
+        // "bindgen",
+        // "default",
+    ],
+    // "rust-analyzer.cargo.features": "all",
+    "rust-analyzer.check.features": "all"
+}
