@@ -17,6 +17,10 @@ example-wasm:
 	@echo "Running wasm example..."
 	node ./examples/wasm-test/main.mjs
 	@echo "Done."
+example-dart:
+	@echo "Running dart example..."
+	dart run ./examples/main.dart
+	@echo "Done."
 init:
 	@echo "Initializing..."
 	git submodule update --init --recursive
