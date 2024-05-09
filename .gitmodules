@@ -4,6 +4,3 @@
 [submodule "snappy"]
 	path = deps/snappy
 	url = git@github.com:google/snappy.git
-[submodule "libexif"]
-	path = deps/libexif
-	url = git@github.com:libexif/libexif.git
