@@ -84,35 +84,20 @@ fn link_cpp() {
 
 #[cfg(feature = "bindgen")]
 fn build_bindgen() {
+    println!("rerun-if-changed=build.rs");
+    println!("rerun-if-changed=deps/snappy");
+
     // let out_dir = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let root_dir = std::path::PathBuf::from(
         std::env::var("CARGO_MANIFEST_DIR").expect("should have CARGO_MANIFEST_DIR var"),
     );
 
-    let snappy_dir = {
-        let mut dir = root_dir.clone();
-        dir.push("deps/snappy");
-        dir
-    };
-
-    let status = std::process::Command::new("./autogen.sh")
-        .current_dir(&snappy_dir)
-        .status()
-        .expect("should spawn autogen.sh ok");
-    assert!(status.success(), "autogen.sh should finish ok");
-
-    let status = std::process::Command::new("./configure")
-        .current_dir(&snappy_dir)
-        .status()
-        .expect("should spawn configure ok");
-    assert!(status.success(), "configure should finish ok");
-
-    let status = std::process::Command::new("make")
-        .args(&["-f", "MyMakefile"])
-        .current_dir(&snappy_dir)
-        .status()
-        .expect("should spawn make ok");
-    assert!(status.success(), "make should finish ok");
+    let dest_prefix = cmake::Config::new(std::path::Path::new("deps").join("snappy"))
+        .define("BUILD_SHARED_LIBS", "OFF")
+        .define("SNAPPY_BUILD_TESTS", "OFF")
+        .define("HAVE_LIBZ", "OFF")
+        .build_target("snappy")
+        .build();
 
     let bindings = bindgen::Builder::default()
         .header("deps/snappy/snappy-c.h")
@@ -124,13 +109,10 @@ fn build_bindgen() {
         .expect("Unable to generate bindings");
 
     bindings
-        .write_to_file(root_dir.join("src/snappy-sys.rs"))
+        .write_to_file(root_dir.join("src/bindings.rs"))
         .expect("Couldn't write bindings!");
 
+    let build = dest_prefix.join("build");
+    println!("cargo:rustc-link-search=native={}", build.display());
     println!("cargo:rustc-link-lib=static=snappy");
-    println!("cargo:rustc-link-lib=c++abi");
-    println!(
-        "cargo:rustc-link-search={}",
-        snappy_dir.to_str().expect("dir should be utf8")
-    );
 }

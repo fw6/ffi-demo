@@ -5,6 +5,8 @@ cfg_if! {
         pub mod snappy;
     } else if #[cfg(feature = "jieba")] {
         pub mod jieba;
+    } else if #[cfg(feature = "bindgen")] {
+        pub mod bindings;
     } else if #[cfg(target_arch = "wasm32")] {
         use wasm_bindgen::prelude::*;
 
