@@ -1,4 +1,7 @@
+#![allow(non_camel_case_types)]
 use cfg_if::cfg_if;
+
+pub mod cbindgen;
 
 cfg_if! {
     if #[cfg(feature = "snappy")] {
@@ -25,7 +28,6 @@ cfg_if! {
     } else {
         // 标准库ffi模块内置了一组实用程序, 主要用于外部函数接口FFI的绑定, 以及用在其他语言传递类C字符串的代码中
         use std::ffi::{c_char, c_uint};
-
         /// 关键字 `extern` 声明了这是一个外部函数, 可以被其他语言调用
         /// 使用`ABI`字符串指定调用约定, 这里是`C`调用约定
         /// 使用`no_mangle`禁止编译器混淆函数名

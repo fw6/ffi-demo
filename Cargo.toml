@@ -22,6 +22,7 @@ web-sys = "0.3"
 
 [build-dependencies]
 cmake = "0.1"
+cbindgen = "0.26"
 
 # 自动为 C（或 C++）库生成 Rust 绑定的辅助库和命令行工具
 bindgen = "0.69"

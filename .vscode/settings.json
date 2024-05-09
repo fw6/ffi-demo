@@ -6,8 +6,8 @@
     "rust-analyzer.cargo.features": [
         // "jieba",
         // "snappy",
-        "bindgen",
-        // "default",
+        // "bindgen",
+        "default",
     ],
     // "rust-analyzer.cargo.features": "all",
     "rust-analyzer.check.features": "all"
